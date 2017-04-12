@@ -1,5 +1,5 @@
 from unittest import TestCase, main
-from mirror_check import MirrorCheck
+from dirror import MirrorCheck
 
 class TestFindDirectories(TestCase):
 
