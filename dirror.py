@@ -1,5 +1,5 @@
 import os, sys, logging
-import logging
+from argparse import ArgumentParser
 
 class MirrorCheck:
 
@@ -37,9 +37,17 @@ class MirrorCheck:
         other_tree = self.recursively_find_directories(other_directory_path)
         return self.is_reflection(tree, other_tree, prefix)
 
+def parse_args(args):
+    parser = ArgumentParser(prog='dirror.py',
+                            description='Ensure that two directories mirror each other.')
+    parser.add_argument('source_directory', type=str, help='path to source directory')
+    parser.add_argument('test_directory', type=str, help='path to test directory')
+    parser.add_argument('prefix', type=str, help='prefix for subddirectories in the test directory')
+    return parser.parse_args(args)
+
 if __name__ == '__main__':
-    command, source_directory, test_directory, prefix = sys.argv
+    args = parse_args(sys.argv[1:])
     mirror_check = MirrorCheck(should_log=True)
-    mirrored = mirror_check.determine(source_directory, test_directory, prefix)
+    mirrored = mirror_check.determine(args.source_directory, args.test_directory, args.prefix)
     signal = int(mirrored)
     sys.exit(signal)
