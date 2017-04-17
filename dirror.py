@@ -44,23 +44,23 @@ class Dirror:
         return self.find_shards(tree, other_tree, [])
 
 class CommandLine:
-    '''Interfaces Dirror with the command line.'''
+    '''Interface Dirror with the command line.'''
 
     NAME = 'dirror.py'
     DESCRIPTION = 'Ensure that two directories mirror each other.'
-    ARGUMENTS = (
-        {'flag': 'source_directory', 'type': str, 'help': 'path to source directory'},
-        {'flag': 'test_directory', 'type': str, 'help': 'path to test directory'},
-        {'flag': '-prefix', 'type': str, 'help': 'prefix for subddirectories in the test directory'},
-        {'flag': '-exclude', 'type': lambda paths: [path for path in paths.split(',')], 'help': 'comma delimited list of exlcuded directory names'}
-    )
 
     def __init__(self, raw_arguments):
         self.raw_arguments = raw_arguments[1:]
+        self.arguments = (
+            {'flag': 'source_directory', 'type': str, 'help': 'path to source directory'},
+            {'flag': 'test_directory', 'type': str, 'help': 'path to test directory'},
+            {'flag': '-prefix', 'type': str, 'help': 'prefix for subddirectories in the test directory'},
+            {'flag': '-exclude', 'type': lambda s: s.split(','), 'help': 'comma delimited list of exlcuded directory names'}
+        )
 
     def parse_arguments(self):
-        parser = ArgumentParser(prog=self.NAME, description=self.DESCRIPTION)
-        for argument in self.ARGUMENTS:
+        parser = ArgumentParser(self.NAME, self.DESCRIPTION)
+        for argument in self.arguments:
             parser.add_argument(argument['flag'], type=argument['type'], help=argument['help'])
         return parser.parse_args(self.raw_arguments)
 
