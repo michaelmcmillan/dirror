@@ -83,7 +83,7 @@ class TestSystem(TestCase):
     def test_it_returns_true_if_test_has_dir_for_every_src(self):
         mirror = MirrorCheck()
         src_path, test_path = 'test/fixtures/system/src', 'test/fixtures/system/test'
-        src_mirrors_test = mirror.determine(src_path, test_path, 'test_')
+        src_mirrors_test = mirror.determine(src_path, test_path, 'test_', [])
         self.assertTrue(src_mirrors_test)
 
 if __name__ == '__main__':

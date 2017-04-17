@@ -32,10 +32,10 @@ class MirrorCheck:
             self.log.error('%s broke the mirror.' % error)
             return False
 
-    def determine(self, directory_path, other_directory_path, prefix):
+    def determine(self, directory_path, other_directory_path, prefix, exclusions):
         tree = self.recursively_find_directories(directory_path)
         other_tree = self.recursively_find_directories(other_directory_path)
-        return self.is_reflection(tree, other_tree, prefix)
+        return self.is_reflection(tree, other_tree, prefix, exclusions)
 
 def parse_args(args):
     parser = ArgumentParser(prog='dirror.py',
@@ -43,11 +43,13 @@ def parse_args(args):
     parser.add_argument('source_directory', type=str, help='path to source directory')
     parser.add_argument('test_directory', type=str, help='path to test directory')
     parser.add_argument('prefix', type=str, help='prefix for subddirectories in the test directory')
+    parser.add_argument('exclude', type=lambda s: [directory for directory in s.split(',')], help='comma delimited list of exlcuded directory names')
+
     return parser.parse_args(args)
 
 if __name__ == '__main__':
     args = parse_args(sys.argv[1:])
     mirror_check = MirrorCheck(should_log=True)
-    mirrored = mirror_check.determine(args.source_directory, args.test_directory, args.prefix)
+    mirrored = mirror_check.determine(args.source_directory, args.test_directory, prefix=args.prefix, exclusions=args.exclude)
     signal = int(mirrored)
     sys.exit(signal)
