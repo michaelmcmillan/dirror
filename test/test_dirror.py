@@ -89,7 +89,7 @@ class TestCompare(TestCase):
 class TestSystem(TestCase):
 
     def test_it_exits_silently_if_no_shards_found(self):
-        flags = ('test/fixtures/system/src', 'test/fixtures/system/test', 'test_', '__pycache__')
+        flags = ('test/fixtures/system/src', 'test/fixtures/system/test', '-prefix test_', '-exclude __pycache__')
         command = 'python3 dirror.py %s' % ' '.join(flags)
         output = check_output(command, shell=True)
         self.assertEqual(output, b'')

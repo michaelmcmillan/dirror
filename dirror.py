@@ -51,8 +51,8 @@ class CommandLine:
     ARGUMENTS = (
         {'flag': 'source_directory', 'type': str, 'help': 'path to source directory'},
         {'flag': 'test_directory', 'type': str, 'help': 'path to test directory'},
-        {'flag': 'prefix', 'type': str, 'help': 'prefix for subddirectories in the test directory'},
-        {'flag': 'exclude', 'type': lambda paths: [path for path in paths.split(',')], 'help': 'comma delimited list of exlcuded directory names'}
+        {'flag': '-prefix', 'type': str, 'help': 'prefix for subddirectories in the test directory'},
+        {'flag': '-exclude', 'type': lambda paths: [path for path in paths.split(',')], 'help': 'comma delimited list of exlcuded directory names'}
     )
 
     def __init__(self, raw_arguments):
