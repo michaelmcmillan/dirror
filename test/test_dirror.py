@@ -71,6 +71,13 @@ class TestCompare(TestCase):
         reflection = mirror.is_reflection(first_tree, second_tree, prefix='test_')
         self.assertFalse(reflection)
 
+    def test_it_ignores_excluded_directories(self):
+        mirror = MirrorCheck()
+        first_tree = {'__pycache__': {}}
+        second_tree = {}
+        reflection = mirror.is_reflection(first_tree, second_tree, prefix='test_', exclusions=['__pycache__'])
+        self.assertTrue(reflection)
+
 class TestSystem(TestCase):
 
     def test_it_returns_true_if_test_has_dir_for_every_src(self):

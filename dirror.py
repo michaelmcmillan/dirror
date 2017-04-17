@@ -19,9 +19,9 @@ class MirrorCheck:
             tree[directory] = self.recursively_find_directories(absolute_path)
         return tree 
 
-    def is_reflection(self, tree, other_tree, prefix=None):
+    def is_reflection(self, tree, other_tree, prefix=None, exclusions=[]):
         def identical_trees(tree, other_tree, prefix):
-            for directory in tree:
+            for directory in (tree.keys() - exclusions):
                 prefixed_directory = (prefix or '') + directory
                 identical_trees(tree[directory], other_tree[prefixed_directory], prefix)
 
